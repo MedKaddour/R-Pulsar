@@ -5,7 +5,8 @@
  */
 package com.rutgers.Encryption;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+//import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import java.util.Base64;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -150,7 +151,7 @@ public final class RSAEncryption {
     public PublicKey getPublicKey(String encodedKey) throws NoSuchAlgorithmException, InvalidKeySpecException
     {
         KeyFactory factory = KeyFactory.getInstance("RSA");
-        X509EncodedKeySpec encodedKeySpec = new X509EncodedKeySpec(Base64.decode(encodedKey));
+        X509EncodedKeySpec encodedKeySpec = new X509EncodedKeySpec(Base64.getDecoder().decode(encodedKey));
         return factory.generatePublic(encodedKeySpec);
     }
 }
