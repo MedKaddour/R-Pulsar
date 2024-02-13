@@ -1,7 +1,3 @@
-/*
- * Copyright The OpenTelemetry Authors
- * SPDX-License-Identifier: Apache-2.0
- */
 
 package com.rutgers.Telemetry;
 import io.opentelemetry.api.OpenTelemetry;
@@ -11,8 +7,7 @@ import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.resources.Resource;
 import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
-import io.opentelemetry.semconv.ResourceAttributes;
-
+import io.opentelemetry.semconv.resource.attributes.*;
 /**
  * All SDK management takes place here, away from the instrumentation code, which should only access
  * the OpenTelemetry APIs.
@@ -20,7 +15,7 @@ import io.opentelemetry.semconv.ResourceAttributes;
 public  class TelemetryConfiguration {
 
   // Name of the service
-  private static  String SERVICE_NAME = "R-Pulsar Service";
+  public static  String SERVICE_NAME = "R-Pulsar Service";
 
   /** Adds a SimpleSpanProcessor initialized with ZipkinSpanExporter to the TracerSdkProvider */
   static public OpenTelemetry initializeOpenTelemetry(String ip, int port) {

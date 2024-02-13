@@ -16,6 +16,7 @@ import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.api.trace.TracerProvider;
+import io.opentelemetry.context.Context;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -79,6 +80,7 @@ public class RP extends MessageListener {
     public int replicationFactor;
     public  Tracer tracer;
     OpenTelemetry openTelemetry;
+    public Span RootSpan;
 
     TracerProvider tracerProvider ;
     
@@ -98,23 +100,31 @@ public class RP extends MessageListener {
         	int telemetryServerPort =Integer.parseInt(telemetryServer.split(":")[1]);
         	OpenTelemetry openTelemetry = TelemetryConfiguration.initializeOpenTelemetry(telemetryServerIP,telemetryServerPort );
         	TracerProvider tracerProvider = openTelemetry.getTracerProvider();
-        	tracer = tracerProvider.get("com.rutgers.RP");}
+        	tracer = tracerProvider.get(RP.class.getName());
+        	}
+        
     } 
     
     public void startDHTMaster(int replicationFactor) throws IOException {
     	//creating an opentelemetry span for distributed tracing
-    	Span span=null;
+    	
     	if (tracer != null) {
-    		span = tracer.spanBuilder("Starting  Master Rendez Vous Node").startSpan();
+    		RootSpan = tracer.spanBuilder("Starting  Master Rendez Vous Node").startSpan();
     		// adding event to the span 
-    		span.addEvent("Event 0:starting");
+    		RootSpan.addEvent("Event 0:starting");
+    		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                RootSpan.end();
+                System.out.println("Application is running");
+                // Perform cleanup or other necessary tasks
+            }));
+
     	}
         peer = new PeerBuilder(uProfile.getEncryptionKeys()).bindings(bindings).ports(port).start();    
         peerDHT = new PeerBuilderDHT(peer).storageLayer(new StorageLayer(new RocksDHT(peer.peerID()), new ThreadedBinarySearchTree(Number640.ZERO))).start();    
         this.replicationFactor = replicationFactor;
         
         id = peer.peerID();
-        if (tracer != null) span.addEvent("Event 1:DHT Master started Listening to: " + DiscoverNetworks.discoverInterfaces(bindings));
+        if (tracer != null) RootSpan.addEvent("Event 1:DHT Master started Listening to: " + DiscoverNetworks.discoverInterfaces(bindings));
         System.out.println("DHT Master started Listening to: " + DiscoverNetworks.discoverInterfaces(bindings));
         System.out.println("Address visible outside is " + peer.peerAddress());
         
@@ -127,21 +137,20 @@ public class RP extends MessageListener {
         keyManager = new PublicKeyManager(id.toString(),uProfile.getEncryptionKeys(), peerDHT, peer);
         new IndirectReplication(peerDHT).replicationFactor(replicationFactor).start();
         
-        if (tracer != null) {
-        	// adding event to the span 
-	        span.addEvent("Event X:finished");
-	        span.end();
-        }
+		/*
+		 * if (tracer != null) { // adding event to the span
+		 * span.addEvent("Event X:finished"); span.end(); }
+		 */
         
     }
                 
     public void startDHTBootstrap(String bootstrap_ip, String bootstrap_port, int replicationFactor) throws UnknownHostException, IOException {
     	//creating an opentelemetry span for distributed tracing
-    	Span span=null;
+    	//Span span=null;
     	if (tracer != null) {
-    		span = tracer.spanBuilder("Starting DHT Bootstrapping Rendez Vous Node").startSpan();
+    		RootSpan = tracer.spanBuilder("Starting DHT Bootstrapping Rendez Vous Node").startSpan();
     		// adding event to the span 
-    		span.addEvent("Event 0:starting");
+    		RootSpan.addEvent("Event 0:starting");
     	}
     	
     	bootstrap_Ip = InetAddress.getByName(bootstrap_ip);
@@ -151,7 +160,7 @@ public class RP extends MessageListener {
         peer = new PeerBuilder(uProfile.getEncryptionKeys()).bindings(bindings).ports(port).start();    
         peerDHT = new PeerBuilderDHT(peer).storageLayer(new StorageLayer(new RocksDHT(peer.peerID()), new ThreadedBinarySearchTree(Number640.ZERO))).start();
         id = peer.peerID();
-        if (tracer != null) span.addEvent("Event 1:DHT Bootstrap started Listening to: " + DiscoverNetworks.discoverInterfaces(bindings));
+        if (tracer != null) RootSpan.addEvent("Event 1:DHT Bootstrap started Listening to: " + DiscoverNetworks.discoverInterfaces(bindings));
         System.out.println("DHT Bootstrap started Listening to: " + DiscoverNetworks.discoverInterfaces(bindings));
         System.out.println("Address visible outside is " + peer.peerAddress());
         
@@ -165,15 +174,15 @@ public class RP extends MessageListener {
             System.out.println("*** FOUND THAT MY OUTSIDE ADDRESS IS " + futureDiscover.peerAddress() + " ***");
             if (tracer != null) {
             	// adding event to the span 
-    	        span.addEvent("Event x:FOUND THAT MY OUTSIDE ADDRESS IS " + futureDiscover.peerAddress());
-    	        span.end();
+            	RootSpan.addEvent("Event 2:FOUND THAT MY OUTSIDE ADDRESS IS " + futureDiscover.peerAddress());
+            	//RootSpan.end();
             }
         } else {
             System.out.println("*** FAILED " + futureDiscover.failedReason() + " ***");
             if (tracer != null) {
             	// adding event to the span 
-    	        span.addEvent("Event X:FAILED " + futureDiscover.failedReason() );
-    	        span.end();
+            	RootSpan.addEvent("Event X:FAILED " + futureDiscover.failedReason() );
+            	RootSpan.end();
             }
         }
         
@@ -190,17 +199,17 @@ public class RP extends MessageListener {
     
     public void startBootstrap(String[] bootstrap_ip_port) throws IOException {
     	//creating an opentelemetry span for distributed tracing
-    	Span span=null;
+    	//Span span=null;
     	if (tracer != null) {
-    		span = tracer.spanBuilder("Starting  Bootstrapping R-Pulsar Node").startSpan();
+    		RootSpan = tracer.spanBuilder("Starting  Bootstrapping R-Pulsar Node").startSpan();
     		// adding event to the span 
-    		span.addEvent("Event 0:starting");
+    		RootSpan.addEvent("Event 0:starting");
     	}
    
     	
         peer = new PeerBuilder(uProfile.getEncryptionKeys()).bindings(bindings).ports(port).start(); 
         id = peer.peerID();
-        if (tracer != null) span.addEvent("Event 1:Peer Bootstrap started Listening to: " + DiscoverNetworks.discoverInterfaces(bindings));
+        if (tracer != null) RootSpan.addEvent("Event 1:Peer Bootstrap started Listening to: " + DiscoverNetworks.discoverInterfaces(bindings));
         System.out.println("Peer Bootstrap started Listening to: " + DiscoverNetworks.discoverInterfaces(bindings));
         System.out.println("Address visible outside is " + peer.peerAddress());
         
@@ -224,15 +233,15 @@ public class RP extends MessageListener {
             System.out.println("*** FOUND THAT MY OUTSIDE ADDRESS IS " + futureDiscover.peerAddress() + " ***");
             if (tracer != null) {
             	// adding event to the span 
-    	        span.addEvent("Event x:FOUND THAT MY OUTSIDE ADDRESS IS " + futureDiscover.peerAddress());
-    	        span.end();
+            	RootSpan.addEvent("Event x:FOUND THAT MY OUTSIDE ADDRESS IS " + futureDiscover.peerAddress());
+            	//RootSpan.end();
             }
         } else {
             System.out.println("*** FAILED " + futureDiscover.failedReason() + " ***");
             if (tracer != null) {
             	// adding event to the span 
-    	        span.addEvent("Event X:FAILED " + futureDiscover.failedReason() );
-    	        span.end();
+            	RootSpan.addEvent("Event X:FAILED " + futureDiscover.failedReason() );
+            	//RootSpan.end();
             }
         }
         
@@ -253,7 +262,7 @@ public class RP extends MessageListener {
     public Object sendDirectMessageBlocking(PeerAddress addr, Message.ARMessage msg) throws UnknownHostException, ClassNotFoundException, IOException, NoSuchAlgorithmException, InvalidKeySpecException {
     	Span span=null;
     	if (tracer != null) {
-    		span = tracer.spanBuilder("SendDirectMessageBlocking :"+msg).startSpan();
+    		span = tracer.spanBuilder("SendDirectMessageBlocking :"+msg.getHeader().getProfile()).setParent(Context.current().with(RootSpan)).startSpan();
     		// adding event to the span 
     		span.addEvent("Event 0:starting");
     	}
@@ -270,15 +279,17 @@ public class RP extends MessageListener {
     public void sendDirectMessageNonBlocking(PeerAddress addr, Message.ARMessage msg) throws NoSuchAlgorithmException, InvalidKeySpecException {        
     	Span span=null;
     	if (tracer != null) {
-    		span = tracer.spanBuilder("SendDirectMessageNonBlocking :"+msg).startSpan();
+    		span = tracer.spanBuilder("SendDirectMessageNonBlocking :"+msg.getHeader().getProfile()).setParent(Context.current().with(RootSpan)).startSpan();
     		// adding event to the span 
     		span.addEvent("Event 0:starting");
     	}
+    //	Context currentContext = Context.current();
+    	
     	futureDirect = peer.sendDirect(addr).object(msg).start();
         futureDirect.addListener(new BaseFutureListener() {
             @Override
             public void operationComplete(BaseFuture f) throws Exception {
-//                System.out.println(System.currentTimeMillis());
+                //System.out.println(System.currentTimeMillis());
             }
 
             @Override
@@ -295,7 +306,7 @@ public class RP extends MessageListener {
     public void sendDirectMessageNonBlocking(PeerConnection conn, Message.ARMessage msg) throws NoSuchAlgorithmException, InvalidKeySpecException {        
     	Span span=null;
     	if (tracer != null) {
-    		span = tracer.spanBuilder("sendDirectMessageNonBlocking :"+msg).startSpan();
+    		span = tracer.spanBuilder("sendDirectMessageNonBlocking :"+msg.getHeader().getProfile()).setParent(Context.current().with(RootSpan)).startSpan();
     		// adding event to the span 
     		span.addEvent("Event 0:starting");
     	}
@@ -320,7 +331,7 @@ public class RP extends MessageListener {
     public void sendDirectMessageNonBlocking(PeerAddress addr, byte[] msg) throws NoSuchAlgorithmException, InvalidKeySpecException {
     	Span span=null;
     	if (tracer != null) {
-    		span = tracer.spanBuilder("sendDirectMessageNonBlocking :"+msg).startSpan();
+    		span = tracer.spanBuilder("sendDirectMessageNonBlocking :"+msg).setParent(Context.current().with(RootSpan)).startSpan();
     		// adding event to the span 
     		span.addEvent("Event 0:starting");
     	}
@@ -425,6 +436,8 @@ public class RP extends MessageListener {
     }
     
     public void stop() {
+    	RootSpan.addEvent("stoping RP");
+    	RootSpan.end();
         peer.shutdown();
     }
     

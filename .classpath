@@ -29,45 +29,10 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="/home/medkaddourr/.gradle/caches/modules-2/files-2.1/io.opentelemetry/opentelemetry-api/1.34.0/2a416e0747489363060880b19091840c1cf426f3/opentelemetry-api-1.34.0.jar" sourcepath="/home/medkaddourr/.gradle/caches/modules-2/files-2.1/io.opentelemetry/opentelemetry-api/1.34.0/6d098e2c4f86fca6329456f3786426ff00eda4a6/opentelemetry-api-1.34.0-sources.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="/home/medkaddourr/.gradle/caches/modules-2/files-2.1/io.opentelemetry/opentelemetry-exporter-zipkin/1.34.0/fb88eeb03d34218a50be81e866d055f7b15e383/opentelemetry-exporter-zipkin-1.34.0.jar" sourcepath="/home/medkaddourr/.gradle/caches/modules-2/files-2.1/io.opentelemetry/opentelemetry-exporter-zipkin/1.34.0/4fa525c99ce565ee66772326e26a144c392c93f2/opentelemetry-exporter-zipkin-1.34.0-sources.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="/home/medkaddourr/.gradle/caches/modules-2/files-2.1/io.opentelemetry/opentelemetry-sdk/1.34.0/99015a8ae6e12a84b6a852fed82d24b46994a97e/opentelemetry-sdk-1.34.0.jar" sourcepath="/home/medkaddourr/.gradle/caches/modules-2/files-2.1/io.opentelemetry/opentelemetry-sdk/1.34.0/ba221d61525f7d7161e8420e50b8f2c42dc3227f/opentelemetry-sdk-1.34.0-sources.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="/home/medkaddourr/.gradle/caches/modules-2/files-2.1/io.opentelemetry/opentelemetry-sdk-common/1.34.0/d69deca7693ff150df48979fc57e21028241fa5b/opentelemetry-sdk-common-1.34.0.jar" sourcepath="/home/medkaddourr/.gradle/caches/modules-2/files-2.1/io.opentelemetry/opentelemetry-sdk-common/1.34.0/54d0fb8a0b4450794a575c178417b3a8ec6e608e/opentelemetry-sdk-common-1.34.0-sources.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="/home/medkaddourr/.gradle/caches/modules-2/files-2.1/io.opentelemetry/opentelemetry-sdk-trace/1.34.0/20b4b17818d41ed20d46219ca0aa8a2e6d4d62b6/opentelemetry-sdk-trace-1.34.0.jar" sourcepath="/home/medkaddourr/.gradle/caches/modules-2/files-2.1/io.opentelemetry/opentelemetry-sdk-trace/1.34.0/164aefc39c4c735eb8a9a9a40e052d6a3d065b64/opentelemetry-sdk-trace-1.34.0-sources.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="/home/medkaddourr/.gradle/caches/modules-2/files-2.1/io.opentelemetry.semconv/opentelemetry-semconv/1.21.0-alpha/207660e74d1e155272e9559fd4d27854b92fc6ac/opentelemetry-semconv-1.21.0-alpha.jar" sourcepath="/home/medkaddourr/.gradle/caches/modules-2/files-2.1/io.opentelemetry.semconv/opentelemetry-semconv/1.21.0-alpha/a0279e4b979ee48a9c295f74009c36206823f39/opentelemetry-semconv-1.21.0-alpha-sources.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="/home/medkaddourr/.gradle/caches/modules-2/files-2.1/io.opentelemetry/opentelemetry-context/1.34.0/35c31b3494209aeb60d267b6354d9e1b8d884682/opentelemetry-context-1.34.0.jar" sourcepath="/home/medkaddourr/.gradle/caches/modules-2/files-2.1/io.opentelemetry/opentelemetry-context/1.34.0/934d1433638e4d3e48c2f8ba0641ce9c8287a951/opentelemetry-context-1.34.0-sources.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
 		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
 			<attribute name="test" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>

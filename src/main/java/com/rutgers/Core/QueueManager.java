@@ -31,8 +31,8 @@ public class QueueManager {
     }
     
     public String randomTopic() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 5; i++) {
+        StringBuilder sb = new StringBuilder("ARM-");
+        for (int i = 0; i < 9; i++) {
             sb.append(alphabet.charAt(r.nextInt(alphabet.length())));
         }
         

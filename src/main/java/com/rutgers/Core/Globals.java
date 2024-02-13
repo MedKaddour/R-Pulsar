@@ -12,7 +12,7 @@ package com.rutgers.Core;
 * @version 1.0
 */
 public class Globals {
-    public static int _THREAD_POOL_ = 5;
+    public static int _THREAD_POOL_ = 1;
     public static int _LOWER_THREAD_POOL_ = 5;
     public static int _MAX_QUERY_DIM_ = 2;
     public static int _MAX_QUERY_VARCHAR_ = 10;

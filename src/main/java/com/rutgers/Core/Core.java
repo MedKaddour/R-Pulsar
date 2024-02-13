@@ -8,6 +8,7 @@ import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.api.trace.TracerProvider;
+import io.opentelemetry.context.Context;
 import io.opentelemetry.context.Scope;
 
 import static com.rutgers.Core.Globals.*;
@@ -17,12 +18,15 @@ import com.rutgers.Core.Message.ARMessage.Header.Profile;
 import com.rutgers.DB.RocksDBMS;
 import com.rutgers.QuadTree.PointQuadTree;
 import com.rutgers.Telemetry.TelemetryConfiguration;
+
+import java.util.ArrayList;
 //import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.util.Base64;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -64,8 +68,11 @@ public class Core {
         LocationKeyManager lkManager;
         QueueManager qManager;
         PointQuadTree<PeerAddress> qTree;
+        TelemetryConfiguration.SERVICE_NAME="Master rendez-vous Service";
         
-       
+        List<ConsumerReplyHandler> replyHandlers = new ArrayList<>(_THREAD_POOL_);
+        
+        
         //Tracer tracer;
         //tracer = tracerProvider.get("com.rutgers.Core");
         //Span span = tracer.spanBuilder("Start  Rendez Vous Node").startSpan();
@@ -109,7 +116,8 @@ public class Core {
                 rp.setupReplyHandler(messageQueue, 0);
                 
                 for(int i = 0; i < _THREAD_POOL_; i++) {
-                    executorService.execute(new ConsumerReplyHandler(messageQueue, userQueue, pollQueue));
+                	replyHandlers.add(new ConsumerReplyHandler(messageQueue, userQueue, pollQueue));
+                    executorService.execute(replyHandlers.get(i));
                 }
 
                 String publicString = Base64.getEncoder().encodeToString(rp.getUserProfile().getPublicKey().getEncoded());       
@@ -174,18 +182,33 @@ public class Core {
                 rp.setupReplyHandler(messageQueue, 0);
                 Span listnerspan=null;
             	if (rp.tracer != null) {
-            		listnerspan = rp.tracer.spanBuilder("Starting "+ _THREAD_POOL_+" Consumer Handlers").startSpan();
+            		listnerspan = rp.tracer.spanBuilder("Starting "+ _THREAD_POOL_+" Consumer Handlers").setParent(Context.current().with(rp.RootSpan)).startSpan();
             		// adding event to the span 
             		listnerspan.addEvent("Event 0:starting");
             	}
-                for(int i = 0; i < _THREAD_POOL_; i++) {
-                    executorService.execute(new ConsumerReplyHandler(messageQueue, userQueue, pollQueue));
-                }
+            	 for(int i = 0; i < _THREAD_POOL_; i++) {
+                 	replyHandlers.add(new ConsumerReplyHandler(messageQueue, userQueue, pollQueue));
+                     executorService.execute(replyHandlers.get(i));
+                 }
                 if (rp.tracer  != null) {
                 	// adding event to the span 
                 	listnerspan.addEvent("Event X:finished");
                 	listnerspan.end();
                 }
+				
+				/*
+				 * try { Thread.sleep(50000); for(int i = 0; i < _THREAD_POOL_; i++) {
+				 * replyHandlers.get(i).setRunning(false); }
+				 * 
+				 * 
+				 * 
+				 * 
+				 * System.out.println("Stopping RP"); Thread.sleep(10000); rp.stop();
+				 * System.exit(0);
+				 * 
+				 * } catch (InterruptedException e) { e.printStackTrace(); }
+				 */
+				 
             }
         } catch (IOException | InterruptedException | NoSuchAlgorithmException ex) {
             Logger.getLogger(Core.class.getName()).log(Level.SEVERE, null, ex);

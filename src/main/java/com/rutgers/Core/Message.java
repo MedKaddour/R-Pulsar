@@ -80,6 +80,7 @@ public final class Message {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:tutorial.ARMessage)
       ARMessageOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use ARMessage.newBuilder() to construct.
     private ARMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -93,14 +94,19 @@ public final class Message {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private ARMessage(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -109,12 +115,6 @@ public final class Message {
             case 0:
               done = true;
               break;
-            default: {
-              if (!input.skipField(tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               com.rutgers.Core.Message.ARMessage.Header.Builder subBuilder = null;
               if (header_ != null) {
@@ -149,6 +149,13 @@ public final class Message {
               topic_ = s;
               break;
             }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -160,6 +167,7 @@ public final class Message {
         if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
           payload_ = payload_.getUnmodifiableView();
         }
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -168,6 +176,7 @@ public final class Message {
       return com.rutgers.Core.Message.internal_static_tutorial_ARMessage_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.rutgers.Core.Message.internal_static_tutorial_ARMessage_fieldAccessorTable
@@ -301,9 +310,9 @@ public final class Message {
     }
 
     /**
-     * Protobuf enum {@code tutorial.ARMessage.RPTagLocation}
+     * Protobuf enum {@code tutorial.ARMessage.RPTag}
      */
-    public enum RPTagLocation
+    public enum RPTag
         implements com.google.protobuf.ProtocolMessageEnum {
       /**
        * <code>RP_EDGE = 0;</code>
@@ -338,11 +347,11 @@ public final class Message {
        * @deprecated Use {@link #forNumber(int)} instead.
        */
       @java.lang.Deprecated
-      public static RPTagLocation valueOf(int value) {
+      public static RPTag valueOf(int value) {
         return forNumber(value);
       }
 
-      public static RPTagLocation forNumber(int value) {
+      public static RPTag forNumber(int value) {
         switch (value) {
           case 0: return RP_EDGE;
           case 1: return RP_CLOUD;
@@ -350,15 +359,15 @@ public final class Message {
         }
       }
 
-      public static com.google.protobuf.Internal.EnumLiteMap<RPTagLocation>
+      public static com.google.protobuf.Internal.EnumLiteMap<RPTag>
           internalGetValueMap() {
         return internalValueMap;
       }
       private static final com.google.protobuf.Internal.EnumLiteMap<
-          RPTagLocation> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<RPTagLocation>() {
-              public RPTagLocation findValueByNumber(int number) {
-                return RPTagLocation.forNumber(number);
+          RPTag> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<RPTag>() {
+              public RPTag findValueByNumber(int number) {
+                return RPTag.forNumber(number);
               }
             };
 
@@ -375,9 +384,9 @@ public final class Message {
         return com.rutgers.Core.Message.ARMessage.getDescriptor().getEnumTypes().get(1);
       }
 
-      private static final RPTagLocation[] VALUES = values();
+      private static final RPTag[] VALUES = values();
 
-      public static RPTagLocation valueOf(
+      public static RPTag valueOf(
           com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
         if (desc.getType() != getDescriptor()) {
           throw new java.lang.IllegalArgumentException(
@@ -391,11 +400,11 @@ public final class Message {
 
       private final int value;
 
-      private RPTagLocation(int value) {
+      private RPTag(int value) {
         this.value = value;
       }
 
-      // @@protoc_insertion_point(enum_scope:tutorial.ARMessage.RPTagLocation)
+      // @@protoc_insertion_point(enum_scope:tutorial.ARMessage.RPTag)
     }
 
     /**
@@ -766,13 +775,33 @@ public final class Message {
           getDomainBytes();
 
       /**
-       * <code>.tutorial.ARMessage.RPTagLocation tagLocation = 9;</code>
+       * <code>.tutorial.ARMessage.RPTag tag = 9;</code>
        */
-      int getTagLocationValue();
+      int getTagValue();
       /**
-       * <code>.tutorial.ARMessage.RPTagLocation tagLocation = 9;</code>
+       * <code>.tutorial.ARMessage.RPTag tag = 9;</code>
        */
-      com.rutgers.Core.Message.ARMessage.RPTagLocation getTagLocation();
+      com.rutgers.Core.Message.ARMessage.RPTag getTag();
+
+      /**
+       * <code>string trace_id = 10;</code>
+       */
+      java.lang.String getTraceId();
+      /**
+       * <code>string trace_id = 10;</code>
+       */
+      com.google.protobuf.ByteString
+          getTraceIdBytes();
+
+      /**
+       * <code>string span_id = 11;</code>
+       */
+      java.lang.String getSpanId();
+      /**
+       * <code>string span_id = 11;</code>
+       */
+      com.google.protobuf.ByteString
+          getSpanIdBytes();
     }
     /**
      * Protobuf type {@code tutorial.ARMessage.Header}
@@ -781,6 +810,7 @@ public final class Message {
         com.google.protobuf.GeneratedMessageV3 implements
         // @@protoc_insertion_point(message_implements:tutorial.ARMessage.Header)
         HeaderOrBuilder {
+    private static final long serialVersionUID = 0L;
       // Use Header.newBuilder() to construct.
       private Header(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
         super(builder);
@@ -793,20 +823,27 @@ public final class Message {
         hID_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         hDimension_ = 0;
         domain_ = "";
-        tagLocation_ = 0;
+        tag_ = 0;
+        traceId_ = "";
+        spanId_ = "";
       }
 
       @java.lang.Override
       public final com.google.protobuf.UnknownFieldSet
       getUnknownFields() {
-        return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+        return this.unknownFields;
       }
       private Header(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         this();
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         int mutable_bitField0_ = 0;
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
         try {
           boolean done = false;
           while (!done) {
@@ -815,12 +852,6 @@ public final class Message {
               case 0:
                 done = true;
                 break;
-              default: {
-                if (!input.skipField(tag)) {
-                  done = true;
-                }
-                break;
-              }
               case 10: {
                 com.rutgers.Core.Message.ARMessage.Header.Profile.Builder subBuilder = null;
                 if (profile_ != null) {
@@ -879,7 +910,26 @@ public final class Message {
               case 72: {
                 int rawValue = input.readEnum();
 
-                tagLocation_ = rawValue;
+                tag_ = rawValue;
+                break;
+              }
+              case 82: {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                traceId_ = s;
+                break;
+              }
+              case 90: {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                spanId_ = s;
+                break;
+              }
+              default: {
+                if (!parseUnknownFieldProto3(
+                    input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
                 break;
               }
             }
@@ -893,6 +943,7 @@ public final class Message {
           if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
             hID_ = hID_.getUnmodifiableView();
           }
+          this.unknownFields = unknownFields.build();
           makeExtensionsImmutable();
         }
       }
@@ -901,6 +952,7 @@ public final class Message {
         return com.rutgers.Core.Message.internal_static_tutorial_ARMessage_Header_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.rutgers.Core.Message.internal_static_tutorial_ARMessage_Header_fieldAccessorTable
@@ -938,6 +990,7 @@ public final class Message {
           com.google.protobuf.GeneratedMessageV3 implements
           // @@protoc_insertion_point(message_implements:tutorial.ARMessage.Header.Profile)
           ProfileOrBuilder {
+      private static final long serialVersionUID = 0L;
         // Use Profile.newBuilder() to construct.
         private Profile(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
           super(builder);
@@ -949,14 +1002,19 @@ public final class Message {
         @java.lang.Override
         public final com.google.protobuf.UnknownFieldSet
         getUnknownFields() {
-          return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+          return this.unknownFields;
         }
         private Profile(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
           this();
+          if (extensionRegistry == null) {
+            throw new java.lang.NullPointerException();
+          }
           int mutable_bitField0_ = 0;
+          com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+              com.google.protobuf.UnknownFieldSet.newBuilder();
           try {
             boolean done = false;
             while (!done) {
@@ -965,12 +1023,6 @@ public final class Message {
                 case 0:
                   done = true;
                   break;
-                default: {
-                  if (!input.skipField(tag)) {
-                    done = true;
-                  }
-                  break;
-                }
                 case 26: {
                   java.lang.String s = input.readStringRequireUtf8();
                   if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -978,6 +1030,13 @@ public final class Message {
                     mutable_bitField0_ |= 0x00000001;
                   }
                   single_.add(s);
+                  break;
+                }
+                default: {
+                  if (!parseUnknownFieldProto3(
+                      input, unknownFields, extensionRegistry, tag)) {
+                    done = true;
+                  }
                   break;
                 }
               }
@@ -991,6 +1050,7 @@ public final class Message {
             if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
               single_ = single_.getUnmodifiableView();
             }
+            this.unknownFields = unknownFields.build();
             makeExtensionsImmutable();
           }
         }
@@ -999,6 +1059,7 @@ public final class Message {
           return com.rutgers.Core.Message.internal_static_tutorial_ARMessage_Header_Profile_descriptor;
         }
 
+        @java.lang.Override
         protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
             internalGetFieldAccessorTable() {
           return com.rutgers.Core.Message.internal_static_tutorial_ARMessage_Header_Profile_fieldAccessorTable
@@ -1036,6 +1097,7 @@ public final class Message {
         }
 
         private byte memoizedIsInitialized = -1;
+        @java.lang.Override
         public final boolean isInitialized() {
           byte isInitialized = memoizedIsInitialized;
           if (isInitialized == 1) return true;
@@ -1045,13 +1107,16 @@ public final class Message {
           return true;
         }
 
+        @java.lang.Override
         public void writeTo(com.google.protobuf.CodedOutputStream output)
                             throws java.io.IOException {
           for (int i = 0; i < single_.size(); i++) {
             com.google.protobuf.GeneratedMessageV3.writeString(output, 3, single_.getRaw(i));
           }
+          unknownFields.writeTo(output);
         }
 
+        @java.lang.Override
         public int getSerializedSize() {
           int size = memoizedSize;
           if (size != -1) return size;
@@ -1065,11 +1130,11 @@ public final class Message {
             size += dataSize;
             size += 1 * getSingleList().size();
           }
+          size += unknownFields.getSerializedSize();
           memoizedSize = size;
           return size;
         }
 
-        private static final long serialVersionUID = 0L;
         @java.lang.Override
         public boolean equals(final java.lang.Object obj) {
           if (obj == this) {
@@ -1083,6 +1148,7 @@ public final class Message {
           boolean result = true;
           result = result && getSingleList()
               .equals(other.getSingleList());
+          result = result && unknownFields.equals(other.unknownFields);
           return result;
         }
 
@@ -1172,6 +1238,7 @@ public final class Message {
               .parseWithIOException(PARSER, input, extensionRegistry);
         }
 
+        @java.lang.Override
         public Builder newBuilderForType() { return newBuilder(); }
         public static Builder newBuilder() {
           return DEFAULT_INSTANCE.toBuilder();
@@ -1179,6 +1246,7 @@ public final class Message {
         public static Builder newBuilder(com.rutgers.Core.Message.ARMessage.Header.Profile prototype) {
           return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
         }
+        @java.lang.Override
         public Builder toBuilder() {
           return this == DEFAULT_INSTANCE
               ? new Builder() : new Builder().mergeFrom(this);
@@ -1202,6 +1270,7 @@ public final class Message {
             return com.rutgers.Core.Message.internal_static_tutorial_ARMessage_Header_Profile_descriptor;
           }
 
+          @java.lang.Override
           protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
               internalGetFieldAccessorTable() {
             return com.rutgers.Core.Message.internal_static_tutorial_ARMessage_Header_Profile_fieldAccessorTable
@@ -1224,6 +1293,7 @@ public final class Message {
                     .alwaysUseFieldBuilders) {
             }
           }
+          @java.lang.Override
           public Builder clear() {
             super.clear();
             single_ = com.google.protobuf.LazyStringArrayList.EMPTY;
@@ -1231,15 +1301,18 @@ public final class Message {
             return this;
           }
 
+          @java.lang.Override
           public com.google.protobuf.Descriptors.Descriptor
               getDescriptorForType() {
             return com.rutgers.Core.Message.internal_static_tutorial_ARMessage_Header_Profile_descriptor;
           }
 
+          @java.lang.Override
           public com.rutgers.Core.Message.ARMessage.Header.Profile getDefaultInstanceForType() {
             return com.rutgers.Core.Message.ARMessage.Header.Profile.getDefaultInstance();
           }
 
+          @java.lang.Override
           public com.rutgers.Core.Message.ARMessage.Header.Profile build() {
             com.rutgers.Core.Message.ARMessage.Header.Profile result = buildPartial();
             if (!result.isInitialized()) {
@@ -1248,6 +1321,7 @@ public final class Message {
             return result;
           }
 
+          @java.lang.Override
           public com.rutgers.Core.Message.ARMessage.Header.Profile buildPartial() {
             com.rutgers.Core.Message.ARMessage.Header.Profile result = new com.rutgers.Core.Message.ARMessage.Header.Profile(this);
             int from_bitField0_ = bitField0_;
@@ -1260,32 +1334,39 @@ public final class Message {
             return result;
           }
 
+          @java.lang.Override
           public Builder clone() {
             return (Builder) super.clone();
           }
+          @java.lang.Override
           public Builder setField(
               com.google.protobuf.Descriptors.FieldDescriptor field,
-              Object value) {
+              java.lang.Object value) {
             return (Builder) super.setField(field, value);
           }
+          @java.lang.Override
           public Builder clearField(
               com.google.protobuf.Descriptors.FieldDescriptor field) {
             return (Builder) super.clearField(field);
           }
+          @java.lang.Override
           public Builder clearOneof(
               com.google.protobuf.Descriptors.OneofDescriptor oneof) {
             return (Builder) super.clearOneof(oneof);
           }
+          @java.lang.Override
           public Builder setRepeatedField(
               com.google.protobuf.Descriptors.FieldDescriptor field,
-              int index, Object value) {
+              int index, java.lang.Object value) {
             return (Builder) super.setRepeatedField(field, index, value);
           }
+          @java.lang.Override
           public Builder addRepeatedField(
               com.google.protobuf.Descriptors.FieldDescriptor field,
-              Object value) {
+              java.lang.Object value) {
             return (Builder) super.addRepeatedField(field, value);
           }
+          @java.lang.Override
           public Builder mergeFrom(com.google.protobuf.Message other) {
             if (other instanceof com.rutgers.Core.Message.ARMessage.Header.Profile) {
               return mergeFrom((com.rutgers.Core.Message.ARMessage.Header.Profile)other);
@@ -1307,14 +1388,17 @@ public final class Message {
               }
               onChanged();
             }
+            this.mergeUnknownFields(other.unknownFields);
             onChanged();
             return this;
           }
 
+          @java.lang.Override
           public final boolean isInitialized() {
             return true;
           }
 
+          @java.lang.Override
           public Builder mergeFrom(
               com.google.protobuf.CodedInputStream input,
               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1427,14 +1511,16 @@ public final class Message {
             onChanged();
             return this;
           }
+          @java.lang.Override
           public final Builder setUnknownFields(
               final com.google.protobuf.UnknownFieldSet unknownFields) {
-            return this;
+            return super.setUnknownFieldsProto3(unknownFields);
           }
 
+          @java.lang.Override
           public final Builder mergeUnknownFields(
               final com.google.protobuf.UnknownFieldSet unknownFields) {
-            return this;
+            return super.mergeUnknownFields(unknownFields);
           }
 
 
@@ -1453,11 +1539,12 @@ public final class Message {
 
         private static final com.google.protobuf.Parser<Profile>
             PARSER = new com.google.protobuf.AbstractParser<Profile>() {
+          @java.lang.Override
           public Profile parsePartialFrom(
               com.google.protobuf.CodedInputStream input,
               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
               throws com.google.protobuf.InvalidProtocolBufferException {
-              return new Profile(input, extensionRegistry);
+            return new Profile(input, extensionRegistry);
           }
         };
 
@@ -1470,6 +1557,7 @@ public final class Message {
           return PARSER;
         }
 
+        @java.lang.Override
         public com.rutgers.Core.Message.ARMessage.Header.Profile getDefaultInstanceForType() {
           return DEFAULT_INSTANCE;
         }
@@ -1510,6 +1598,7 @@ public final class Message {
        * <code>.tutorial.ARMessage.RPType type = 2;</code>
        */
       public com.rutgers.Core.Message.ARMessage.RPType getType() {
+        @SuppressWarnings("deprecation")
         com.rutgers.Core.Message.ARMessage.RPType result = com.rutgers.Core.Message.ARMessage.RPType.valueOf(type_);
         return result == null ? com.rutgers.Core.Message.ARMessage.RPType.UNRECOGNIZED : result;
       }
@@ -1638,23 +1727,93 @@ public final class Message {
         }
       }
 
-      public static final int TAGLOCATION_FIELD_NUMBER = 9;
-      private int tagLocation_;
+      public static final int TAG_FIELD_NUMBER = 9;
+      private int tag_;
       /**
-       * <code>.tutorial.ARMessage.RPTagLocation tagLocation = 9;</code>
+       * <code>.tutorial.ARMessage.RPTag tag = 9;</code>
        */
-      public int getTagLocationValue() {
-        return tagLocation_;
+      public int getTagValue() {
+        return tag_;
       }
       /**
-       * <code>.tutorial.ARMessage.RPTagLocation tagLocation = 9;</code>
+       * <code>.tutorial.ARMessage.RPTag tag = 9;</code>
        */
-      public com.rutgers.Core.Message.ARMessage.RPTagLocation getTagLocation() {
-        com.rutgers.Core.Message.ARMessage.RPTagLocation result = com.rutgers.Core.Message.ARMessage.RPTagLocation.valueOf(tagLocation_);
-        return result == null ? com.rutgers.Core.Message.ARMessage.RPTagLocation.UNRECOGNIZED : result;
+      public com.rutgers.Core.Message.ARMessage.RPTag getTag() {
+        @SuppressWarnings("deprecation")
+        com.rutgers.Core.Message.ARMessage.RPTag result = com.rutgers.Core.Message.ARMessage.RPTag.valueOf(tag_);
+        return result == null ? com.rutgers.Core.Message.ARMessage.RPTag.UNRECOGNIZED : result;
+      }
+
+      public static final int TRACE_ID_FIELD_NUMBER = 10;
+      private volatile java.lang.Object traceId_;
+      /**
+       * <code>string trace_id = 10;</code>
+       */
+      public java.lang.String getTraceId() {
+        java.lang.Object ref = traceId_;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          traceId_ = s;
+          return s;
+        }
+      }
+      /**
+       * <code>string trace_id = 10;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTraceIdBytes() {
+        java.lang.Object ref = traceId_;
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          traceId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
+      public static final int SPAN_ID_FIELD_NUMBER = 11;
+      private volatile java.lang.Object spanId_;
+      /**
+       * <code>string span_id = 11;</code>
+       */
+      public java.lang.String getSpanId() {
+        java.lang.Object ref = spanId_;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          spanId_ = s;
+          return s;
+        }
+      }
+      /**
+       * <code>string span_id = 11;</code>
+       */
+      public com.google.protobuf.ByteString
+          getSpanIdBytes() {
+        java.lang.Object ref = spanId_;
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          spanId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
       }
 
       private byte memoizedIsInitialized = -1;
+      @java.lang.Override
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
@@ -1664,6 +1823,7 @@ public final class Message {
         return true;
       }
 
+      @java.lang.Override
       public void writeTo(com.google.protobuf.CodedOutputStream output)
                           throws java.io.IOException {
         if (profile_ != null) {
@@ -1690,11 +1850,19 @@ public final class Message {
         if (!getDomainBytes().isEmpty()) {
           com.google.protobuf.GeneratedMessageV3.writeString(output, 8, domain_);
         }
-        if (tagLocation_ != com.rutgers.Core.Message.ARMessage.RPTagLocation.RP_EDGE.getNumber()) {
-          output.writeEnum(9, tagLocation_);
+        if (tag_ != com.rutgers.Core.Message.ARMessage.RPTag.RP_EDGE.getNumber()) {
+          output.writeEnum(9, tag_);
         }
+        if (!getTraceIdBytes().isEmpty()) {
+          com.google.protobuf.GeneratedMessageV3.writeString(output, 10, traceId_);
+        }
+        if (!getSpanIdBytes().isEmpty()) {
+          com.google.protobuf.GeneratedMessageV3.writeString(output, 11, spanId_);
+        }
+        unknownFields.writeTo(output);
       }
 
+      @java.lang.Override
       public int getSerializedSize() {
         int size = memoizedSize;
         if (size != -1) return size;
@@ -1734,15 +1902,21 @@ public final class Message {
         if (!getDomainBytes().isEmpty()) {
           size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, domain_);
         }
-        if (tagLocation_ != com.rutgers.Core.Message.ARMessage.RPTagLocation.RP_EDGE.getNumber()) {
+        if (tag_ != com.rutgers.Core.Message.ARMessage.RPTag.RP_EDGE.getNumber()) {
           size += com.google.protobuf.CodedOutputStream
-            .computeEnumSize(9, tagLocation_);
+            .computeEnumSize(9, tag_);
         }
+        if (!getTraceIdBytes().isEmpty()) {
+          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(10, traceId_);
+        }
+        if (!getSpanIdBytes().isEmpty()) {
+          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(11, spanId_);
+        }
+        size += unknownFields.getSerializedSize();
         memoizedSize = size;
         return size;
       }
 
-      private static final long serialVersionUID = 0L;
       @java.lang.Override
       public boolean equals(final java.lang.Object obj) {
         if (obj == this) {
@@ -1776,7 +1950,12 @@ public final class Message {
             == other.getHDimension());
         result = result && getDomain()
             .equals(other.getDomain());
-        result = result && tagLocation_ == other.tagLocation_;
+        result = result && tag_ == other.tag_;
+        result = result && getTraceId()
+            .equals(other.getTraceId());
+        result = result && getSpanId()
+            .equals(other.getSpanId());
+        result = result && unknownFields.equals(other.unknownFields);
         return result;
       }
 
@@ -1809,8 +1988,12 @@ public final class Message {
         hash = (53 * hash) + getHDimension();
         hash = (37 * hash) + DOMAIN_FIELD_NUMBER;
         hash = (53 * hash) + getDomain().hashCode();
-        hash = (37 * hash) + TAGLOCATION_FIELD_NUMBER;
-        hash = (53 * hash) + tagLocation_;
+        hash = (37 * hash) + TAG_FIELD_NUMBER;
+        hash = (53 * hash) + tag_;
+        hash = (37 * hash) + TRACE_ID_FIELD_NUMBER;
+        hash = (53 * hash) + getTraceId().hashCode();
+        hash = (37 * hash) + SPAN_ID_FIELD_NUMBER;
+        hash = (53 * hash) + getSpanId().hashCode();
         hash = (29 * hash) + unknownFields.hashCode();
         memoizedHashCode = hash;
         return hash;
@@ -1886,6 +2069,7 @@ public final class Message {
             .parseWithIOException(PARSER, input, extensionRegistry);
       }
 
+      @java.lang.Override
       public Builder newBuilderForType() { return newBuilder(); }
       public static Builder newBuilder() {
         return DEFAULT_INSTANCE.toBuilder();
@@ -1893,6 +2077,7 @@ public final class Message {
       public static Builder newBuilder(com.rutgers.Core.Message.ARMessage.Header prototype) {
         return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
       }
+      @java.lang.Override
       public Builder toBuilder() {
         return this == DEFAULT_INSTANCE
             ? new Builder() : new Builder().mergeFrom(this);
@@ -1916,6 +2101,7 @@ public final class Message {
           return com.rutgers.Core.Message.internal_static_tutorial_ARMessage_Header_descriptor;
         }
 
+        @java.lang.Override
         protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
             internalGetFieldAccessorTable() {
           return com.rutgers.Core.Message.internal_static_tutorial_ARMessage_Header_fieldAccessorTable
@@ -1938,6 +2124,7 @@ public final class Message {
                   .alwaysUseFieldBuilders) {
           }
         }
+        @java.lang.Override
         public Builder clear() {
           super.clear();
           if (profileBuilder_ == null) {
@@ -1960,20 +2147,27 @@ public final class Message {
 
           domain_ = "";
 
-          tagLocation_ = 0;
+          tag_ = 0;
+
+          traceId_ = "";
+
+          spanId_ = "";
 
           return this;
         }
 
+        @java.lang.Override
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
           return com.rutgers.Core.Message.internal_static_tutorial_ARMessage_Header_descriptor;
         }
 
+        @java.lang.Override
         public com.rutgers.Core.Message.ARMessage.Header getDefaultInstanceForType() {
           return com.rutgers.Core.Message.ARMessage.Header.getDefaultInstance();
         }
 
+        @java.lang.Override
         public com.rutgers.Core.Message.ARMessage.Header build() {
           com.rutgers.Core.Message.ARMessage.Header result = buildPartial();
           if (!result.isInitialized()) {
@@ -1982,6 +2176,7 @@ public final class Message {
           return result;
         }
 
+        @java.lang.Override
         public com.rutgers.Core.Message.ARMessage.Header buildPartial() {
           com.rutgers.Core.Message.ARMessage.Header result = new com.rutgers.Core.Message.ARMessage.Header(this);
           int from_bitField0_ = bitField0_;
@@ -2002,38 +2197,47 @@ public final class Message {
           result.hID_ = hID_;
           result.hDimension_ = hDimension_;
           result.domain_ = domain_;
-          result.tagLocation_ = tagLocation_;
+          result.tag_ = tag_;
+          result.traceId_ = traceId_;
+          result.spanId_ = spanId_;
           result.bitField0_ = to_bitField0_;
           onBuilt();
           return result;
         }
 
+        @java.lang.Override
         public Builder clone() {
           return (Builder) super.clone();
         }
+        @java.lang.Override
         public Builder setField(
             com.google.protobuf.Descriptors.FieldDescriptor field,
-            Object value) {
+            java.lang.Object value) {
           return (Builder) super.setField(field, value);
         }
+        @java.lang.Override
         public Builder clearField(
             com.google.protobuf.Descriptors.FieldDescriptor field) {
           return (Builder) super.clearField(field);
         }
+        @java.lang.Override
         public Builder clearOneof(
             com.google.protobuf.Descriptors.OneofDescriptor oneof) {
           return (Builder) super.clearOneof(oneof);
         }
+        @java.lang.Override
         public Builder setRepeatedField(
             com.google.protobuf.Descriptors.FieldDescriptor field,
-            int index, Object value) {
+            int index, java.lang.Object value) {
           return (Builder) super.setRepeatedField(field, index, value);
         }
+        @java.lang.Override
         public Builder addRepeatedField(
             com.google.protobuf.Descriptors.FieldDescriptor field,
-            Object value) {
+            java.lang.Object value) {
           return (Builder) super.addRepeatedField(field, value);
         }
+        @java.lang.Override
         public Builder mergeFrom(com.google.protobuf.Message other) {
           if (other instanceof com.rutgers.Core.Message.ARMessage.Header) {
             return mergeFrom((com.rutgers.Core.Message.ARMessage.Header)other);
@@ -2078,17 +2282,28 @@ public final class Message {
             domain_ = other.domain_;
             onChanged();
           }
-          if (other.tagLocation_ != 0) {
-            setTagLocationValue(other.getTagLocationValue());
+          if (other.tag_ != 0) {
+            setTagValue(other.getTagValue());
           }
+          if (!other.getTraceId().isEmpty()) {
+            traceId_ = other.traceId_;
+            onChanged();
+          }
+          if (!other.getSpanId().isEmpty()) {
+            spanId_ = other.spanId_;
+            onChanged();
+          }
+          this.mergeUnknownFields(other.unknownFields);
           onChanged();
           return this;
         }
 
+        @java.lang.Override
         public final boolean isInitialized() {
           return true;
         }
 
+        @java.lang.Override
         public Builder mergeFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2244,6 +2459,7 @@ public final class Message {
          * <code>.tutorial.ARMessage.RPType type = 2;</code>
          */
         public com.rutgers.Core.Message.ARMessage.RPType getType() {
+          @SuppressWarnings("deprecation")
           com.rutgers.Core.Message.ARMessage.RPType result = com.rutgers.Core.Message.ARMessage.RPType.valueOf(type_);
           return result == null ? com.rutgers.Core.Message.ARMessage.RPType.UNRECOGNIZED : result;
         }
@@ -2579,57 +2795,198 @@ public final class Message {
           return this;
         }
 
-        private int tagLocation_ = 0;
+        private int tag_ = 0;
         /**
-         * <code>.tutorial.ARMessage.RPTagLocation tagLocation = 9;</code>
+         * <code>.tutorial.ARMessage.RPTag tag = 9;</code>
          */
-        public int getTagLocationValue() {
-          return tagLocation_;
+        public int getTagValue() {
+          return tag_;
         }
         /**
-         * <code>.tutorial.ARMessage.RPTagLocation tagLocation = 9;</code>
+         * <code>.tutorial.ARMessage.RPTag tag = 9;</code>
          */
-        public Builder setTagLocationValue(int value) {
-          tagLocation_ = value;
+        public Builder setTagValue(int value) {
+          tag_ = value;
           onChanged();
           return this;
         }
         /**
-         * <code>.tutorial.ARMessage.RPTagLocation tagLocation = 9;</code>
+         * <code>.tutorial.ARMessage.RPTag tag = 9;</code>
          */
-        public com.rutgers.Core.Message.ARMessage.RPTagLocation getTagLocation() {
-          com.rutgers.Core.Message.ARMessage.RPTagLocation result = com.rutgers.Core.Message.ARMessage.RPTagLocation.valueOf(tagLocation_);
-          return result == null ? com.rutgers.Core.Message.ARMessage.RPTagLocation.UNRECOGNIZED : result;
+        public com.rutgers.Core.Message.ARMessage.RPTag getTag() {
+          @SuppressWarnings("deprecation")
+          com.rutgers.Core.Message.ARMessage.RPTag result = com.rutgers.Core.Message.ARMessage.RPTag.valueOf(tag_);
+          return result == null ? com.rutgers.Core.Message.ARMessage.RPTag.UNRECOGNIZED : result;
         }
         /**
-         * <code>.tutorial.ARMessage.RPTagLocation tagLocation = 9;</code>
+         * <code>.tutorial.ARMessage.RPTag tag = 9;</code>
          */
-        public Builder setTagLocation(com.rutgers.Core.Message.ARMessage.RPTagLocation value) {
+        public Builder setTag(com.rutgers.Core.Message.ARMessage.RPTag value) {
           if (value == null) {
             throw new NullPointerException();
           }
           
-          tagLocation_ = value.getNumber();
+          tag_ = value.getNumber();
           onChanged();
           return this;
         }
         /**
-         * <code>.tutorial.ARMessage.RPTagLocation tagLocation = 9;</code>
+         * <code>.tutorial.ARMessage.RPTag tag = 9;</code>
          */
-        public Builder clearTagLocation() {
+        public Builder clearTag() {
           
-          tagLocation_ = 0;
+          tag_ = 0;
           onChanged();
           return this;
         }
-        public final Builder setUnknownFields(
-            final com.google.protobuf.UnknownFieldSet unknownFields) {
+
+        private java.lang.Object traceId_ = "";
+        /**
+         * <code>string trace_id = 10;</code>
+         */
+        public java.lang.String getTraceId() {
+          java.lang.Object ref = traceId_;
+          if (!(ref instanceof java.lang.String)) {
+            com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            traceId_ = s;
+            return s;
+          } else {
+            return (java.lang.String) ref;
+          }
+        }
+        /**
+         * <code>string trace_id = 10;</code>
+         */
+        public com.google.protobuf.ByteString
+            getTraceIdBytes() {
+          java.lang.Object ref = traceId_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            traceId_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>string trace_id = 10;</code>
+         */
+        public Builder setTraceId(
+            java.lang.String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  
+          traceId_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>string trace_id = 10;</code>
+         */
+        public Builder clearTraceId() {
+          
+          traceId_ = getDefaultInstance().getTraceId();
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>string trace_id = 10;</code>
+         */
+        public Builder setTraceIdBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+          
+          traceId_ = value;
+          onChanged();
           return this;
         }
 
+        private java.lang.Object spanId_ = "";
+        /**
+         * <code>string span_id = 11;</code>
+         */
+        public java.lang.String getSpanId() {
+          java.lang.Object ref = spanId_;
+          if (!(ref instanceof java.lang.String)) {
+            com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            spanId_ = s;
+            return s;
+          } else {
+            return (java.lang.String) ref;
+          }
+        }
+        /**
+         * <code>string span_id = 11;</code>
+         */
+        public com.google.protobuf.ByteString
+            getSpanIdBytes() {
+          java.lang.Object ref = spanId_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            spanId_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>string span_id = 11;</code>
+         */
+        public Builder setSpanId(
+            java.lang.String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  
+          spanId_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>string span_id = 11;</code>
+         */
+        public Builder clearSpanId() {
+          
+          spanId_ = getDefaultInstance().getSpanId();
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>string span_id = 11;</code>
+         */
+        public Builder setSpanIdBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+          
+          spanId_ = value;
+          onChanged();
+          return this;
+        }
+        @java.lang.Override
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.setUnknownFieldsProto3(unknownFields);
+        }
+
+        @java.lang.Override
         public final Builder mergeUnknownFields(
             final com.google.protobuf.UnknownFieldSet unknownFields) {
-          return this;
+          return super.mergeUnknownFields(unknownFields);
         }
 
 
@@ -2648,11 +3005,12 @@ public final class Message {
 
       private static final com.google.protobuf.Parser<Header>
           PARSER = new com.google.protobuf.AbstractParser<Header>() {
+        @java.lang.Override
         public Header parsePartialFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-            return new Header(input, extensionRegistry);
+          return new Header(input, extensionRegistry);
         }
       };
 
@@ -2665,6 +3023,7 @@ public final class Message {
         return PARSER;
       }
 
+      @java.lang.Override
       public com.rutgers.Core.Message.ARMessage.Header getDefaultInstanceForType() {
         return DEFAULT_INSTANCE;
       }
@@ -2705,6 +3064,7 @@ public final class Message {
      * <code>.tutorial.ARMessage.Action action = 2;</code>
      */
     public com.rutgers.Core.Message.ARMessage.Action getAction() {
+      @SuppressWarnings("deprecation")
       com.rutgers.Core.Message.ARMessage.Action result = com.rutgers.Core.Message.ARMessage.Action.valueOf(action_);
       return result == null ? com.rutgers.Core.Message.ARMessage.Action.UNRECOGNIZED : result;
     }
@@ -2773,6 +3133,7 @@ public final class Message {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -2782,6 +3143,7 @@ public final class Message {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (header_ != null) {
@@ -2796,8 +3158,10 @@ public final class Message {
       if (!getTopicBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, topic_);
       }
+      unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -2822,11 +3186,11 @@ public final class Message {
       if (!getTopicBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, topic_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -2848,6 +3212,7 @@ public final class Message {
           .equals(other.getPayloadList());
       result = result && getTopic()
           .equals(other.getTopic());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -2945,6 +3310,7 @@ public final class Message {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -2952,6 +3318,7 @@ public final class Message {
     public static Builder newBuilder(com.rutgers.Core.Message.ARMessage prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -2979,6 +3346,7 @@ public final class Message {
         return com.rutgers.Core.Message.internal_static_tutorial_ARMessage_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.rutgers.Core.Message.internal_static_tutorial_ARMessage_fieldAccessorTable
@@ -3001,6 +3369,7 @@ public final class Message {
                 .alwaysUseFieldBuilders) {
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (headerBuilder_ == null) {
@@ -3018,15 +3387,18 @@ public final class Message {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.rutgers.Core.Message.internal_static_tutorial_ARMessage_descriptor;
       }
 
+      @java.lang.Override
       public com.rutgers.Core.Message.ARMessage getDefaultInstanceForType() {
         return com.rutgers.Core.Message.ARMessage.getDefaultInstance();
       }
 
+      @java.lang.Override
       public com.rutgers.Core.Message.ARMessage build() {
         com.rutgers.Core.Message.ARMessage result = buildPartial();
         if (!result.isInitialized()) {
@@ -3035,6 +3407,7 @@ public final class Message {
         return result;
       }
 
+      @java.lang.Override
       public com.rutgers.Core.Message.ARMessage buildPartial() {
         com.rutgers.Core.Message.ARMessage result = new com.rutgers.Core.Message.ARMessage(this);
         int from_bitField0_ = bitField0_;
@@ -3056,32 +3429,39 @@ public final class Message {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.rutgers.Core.Message.ARMessage) {
           return mergeFrom((com.rutgers.Core.Message.ARMessage)other);
@@ -3113,14 +3493,17 @@ public final class Message {
           topic_ = other.topic_;
           onChanged();
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3276,6 +3659,7 @@ public final class Message {
        * <code>.tutorial.ARMessage.Action action = 2;</code>
        */
       public com.rutgers.Core.Message.ARMessage.Action getAction() {
+        @SuppressWarnings("deprecation")
         com.rutgers.Core.Message.ARMessage.Action result = com.rutgers.Core.Message.ARMessage.Action.valueOf(action_);
         return result == null ? com.rutgers.Core.Message.ARMessage.Action.UNRECOGNIZED : result;
       }
@@ -3463,14 +3847,16 @@ public final class Message {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -3489,11 +3875,12 @@ public final class Message {
 
     private static final com.google.protobuf.Parser<ARMessage>
         PARSER = new com.google.protobuf.AbstractParser<ARMessage>() {
+      @java.lang.Override
       public ARMessage parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ARMessage(input, extensionRegistry);
+        return new ARMessage(input, extensionRegistry);
       }
     };
 
@@ -3506,6 +3893,7 @@ public final class Message {
       return PARSER;
     }
 
+    @java.lang.Override
     public com.rutgers.Core.Message.ARMessage getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -3536,33 +3924,34 @@ public final class Message {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rMessage.proto\022\010tutorial\"\367\007\n\tARMessage\022" +
+      "\n\rMessage.proto\022\010tutorial\"\202\010\n\tARMessage\022" +
       "*\n\006header\030\001 \001(\0132\032.tutorial.ARMessage.Hea" +
       "der\022*\n\006action\030\002 \001(\0162\032.tutorial.ARMessage" +
       ".Action\022\017\n\007payload\030\003 \003(\t\022\r\n\005topic\030\004 \001(\t\032" +
-      "\241\002\n\006Header\0223\n\007profile\030\001 \001(\0132\".tutorial.A" +
+      "\264\002\n\006Header\0223\n\007profile\030\001 \001(\0132\".tutorial.A" +
       "RMessage.Header.Profile\022(\n\004type\030\002 \001(\0162\032." +
       "tutorial.ARMessage.RPType\022\020\n\010latitude\030\003 " +
       "\001(\001\022\021\n\tlongitude\030\004 \001(\001\022\017\n\007peer_id\030\005 \001(\t\022" +
       "\013\n\003hID\030\006 \003(\t\022\022\n\nhDimension\030\007 \001(\005\022\016\n\006doma" +
-      "in\030\010 \001(\t\0226\n\013tagLocation\030\t \001(\0162!.tutorial",
-      ".ARMessage.RPTagLocation\032\031\n\007Profile\022\016\n\006s" +
-      "ingle\030\003 \003(\t\"W\n\006RPType\022\017\n\013AR_CONSUMER\020\000\022\013" +
-      "\n\007AR_USER\020\001\022\017\n\013AR_PRODUCER\020\002\022\023\n\017AR_ANDRO" +
-      "ID_USER\020\003\022\t\n\005AR_RP\020\004\"*\n\rRPTagLocation\022\013\n" +
-      "\007RP_EDGE\020\000\022\014\n\010RP_CLOUD\020\001\"\310\003\n\006Action\022\024\n\020R" +
-      "EQUEST_RESPONSE\020\000\022\016\n\nSTORE_DATA\020\001\022\017\n\013STO" +
-      "RE_QUEUE\020\002\022\n\n\006UPDATE\020\003\022\013\n\007REQUEST\020\004\022\t\n\005H" +
-      "ELLO\020\005\022\017\n\013NOTIFY_DATA\020\006\022\023\n\017NOTIFY_INTERE" +
-      "ST\020\007\022\027\n\023NOTIFY_DATA_ANDROID\020\010\022\t\n\005QUERY\020\t" +
-      "\022\030\n\024STORE_STORM_TOPOLOGY\020\n\022\030\n\024START_STOR",
-      "M_TOPOLOGY\020\013\022\027\n\023STOP_STORM_TOPOLOGY\020\014\022\023\n" +
-      "\017PROFILE_REQUEST\020\r\022\024\n\020PROFILE_RESPONSE\020\016" +
-      "\022\020\n\014NOTIFY_START\020\017\022\017\n\013NOTIFY_STOP\020\020\022\010\n\004S" +
-      "TOP\020\021\022\023\n\017DELETE_INTEREST\020\022\022\017\n\013DELETE_DAT" +
-      "A\020\023\022\031\n\025STORE_EDGENT_TOPOLOGY\020\024\022\031\n\025START_" +
-      "EDGENT_TOPOLOGY\020\025\022\030\n\024STOP_EDGENT_TOPOLOG" +
-      "Y\020\026B\033\n\020com.rutgers.CoreB\007Messageb\006proto3"
+      "in\030\010 \001(\t\022&\n\003tag\030\t \001(\0162\031.tutorial.ARMessa" +
+      "ge.RPTag\022\020\n\010trace_id\030\n \001(\t\022\017\n\007span_id\030\013 " +
+      "\001(\t\032\031\n\007Profile\022\016\n\006single\030\003 \003(\t\"W\n\006RPType" +
+      "\022\017\n\013AR_CONSUMER\020\000\022\013\n\007AR_USER\020\001\022\017\n\013AR_PRO" +
+      "DUCER\020\002\022\023\n\017AR_ANDROID_USER\020\003\022\t\n\005AR_RP\020\004\"" +
+      "\"\n\005RPTag\022\013\n\007RP_EDGE\020\000\022\014\n\010RP_CLOUD\020\001\"\310\003\n\006" +
+      "Action\022\024\n\020REQUEST_RESPONSE\020\000\022\016\n\nSTORE_DA" +
+      "TA\020\001\022\017\n\013STORE_QUEUE\020\002\022\n\n\006UPDATE\020\003\022\013\n\007REQ" +
+      "UEST\020\004\022\t\n\005HELLO\020\005\022\017\n\013NOTIFY_DATA\020\006\022\023\n\017NO" +
+      "TIFY_INTEREST\020\007\022\027\n\023NOTIFY_DATA_ANDROID\020\010" +
+      "\022\t\n\005QUERY\020\t\022\030\n\024STORE_STORM_TOPOLOGY\020\n\022\030\n" +
+      "\024START_STORM_TOPOLOGY\020\013\022\027\n\023STOP_STORM_TO" +
+      "POLOGY\020\014\022\023\n\017PROFILE_REQUEST\020\r\022\024\n\020PROFILE" +
+      "_RESPONSE\020\016\022\020\n\014NOTIFY_START\020\017\022\017\n\013NOTIFY_" +
+      "STOP\020\020\022\010\n\004STOP\020\021\022\023\n\017DELETE_INTEREST\020\022\022\017\n" +
+      "\013DELETE_DATA\020\023\022\031\n\025STORE_EDGENT_TOPOLOGY\020" +
+      "\024\022\031\n\025START_EDGENT_TOPOLOGY\020\025\022\030\n\024STOP_EDG" +
+      "ENT_TOPOLOGY\020\026B\033\n\020com.rutgers.CoreB\007Mess" +
+      "ageb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3587,7 +3976,7 @@ public final class Message {
     internal_static_tutorial_ARMessage_Header_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_tutorial_ARMessage_Header_descriptor,
-        new java.lang.String[] { "Profile", "Type", "Latitude", "Longitude", "PeerId", "HID", "HDimension", "Domain", "TagLocation", });
+        new java.lang.String[] { "Profile", "Type", "Latitude", "Longitude", "PeerId", "HID", "HDimension", "Domain", "Tag", "TraceId", "SpanId", });
     internal_static_tutorial_ARMessage_Header_Profile_descriptor =
       internal_static_tutorial_ARMessage_Header_descriptor.getNestedTypes().get(0);
     internal_static_tutorial_ARMessage_Header_Profile_fieldAccessorTable = new

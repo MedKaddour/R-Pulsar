@@ -5,6 +5,7 @@ package tutorial;
 // [START java_declaration]
 option java_package = "com.rutgers.Core";
 option java_outer_classname = "Message";
+
 // [END java_declaration]
 
 // [START messages]
@@ -17,7 +18,6 @@ enum RPType {
   AR_ANDROID_USER = 3;
   AR_RP = 4;
 }
-
 enum RPTag {
   RP_EDGE = 0;
   RP_CLOUD = 1;
@@ -64,6 +64,8 @@ message Profile {
   int32 hDimension = 7;
   string domain = 8;
   RPTag tag = 9;
+  string trace_id = 10;
+  string span_id = 11;
 }
 
   Header header = 1;

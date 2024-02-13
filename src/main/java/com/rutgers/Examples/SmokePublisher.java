@@ -16,7 +16,11 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.FileReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -52,17 +56,57 @@ public class SmokePublisher {
         
         @Override
         public void run() {
-            //Using some compression techniques to reduce network overhead
-            for(int i = 0; i < iterations; i ++) {
-                try {
-                	// Pushing a record to the RP
-                    Message.ARMessage push_msg = Message.ARMessage.newBuilder().setAction(Message.ARMessage.Action.STORE_QUEUE).setTopic(msg.getTopic()).addPayload(payload).build();
-                    System.out.println("Sending: " + payload);
-                    producer.stream(push_msg, msg.getHeader().getPeerId());
-                } catch (NoSuchAlgorithmException | InvalidKeySpecException | UnknownHostException | InterruptedException ex) {
-                    Logger.getLogger(StormPublisher.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+        	  try {
+                  // API endpoint URL
+                  URL url = new URL("https://data.sagecontinuum.org/api/v1/query");
+
+                  // Open a connection to the URL
+                  HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                  // Set the request method to POST
+                  connection.setRequestMethod("POST");
+
+                  // Set the request headers
+                  connection.setRequestProperty("Content-Type", "application/json");
+
+                  // Enable input/output streams
+                  connection.setDoOutput(true);
+                  connection.setDoInput(true);
+
+                  // Create the JSON request payload
+                  String jsonInputString = "{ \"start\": \"-3h\", " +
+                          "\"filter\": { \"plugin\": \"registry.sagecontinuum.org/iperezx/wildfire-smoke-detection:0.5.0\"} }";
+
+                  // Write the payload to the output stream
+                  try (OutputStream os = connection.getOutputStream()) {
+                      byte[] input = jsonInputString.getBytes("utf-8");
+                      os.write(input, 0, input.length);
+                  }
+
+                  // Get the HTTP response code
+                  int responseCode = connection.getResponseCode();
+
+                  // Read the response from the server
+                  try (BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"))) {
+                      StringBuilder response = new StringBuilder();
+                      String responseLine;
+                      while ((responseLine = br.readLine()) != null) {
+                          response.append(responseLine.trim());
+                          Message.ARMessage push_msg = Message.ARMessage.newBuilder().setAction(Message.ARMessage.Action.STORE_QUEUE).setTopic(msg.getTopic()).addPayload(payload).build();
+                          System.out.println("Sending: " + responseLine.trim());
+                          producer.stream(push_msg, msg.getHeader().getPeerId());
+                      }
+                      System.out.println("Response Code: " + responseCode);
+                      System.out.println("Response Body: " + response.toString());
+                  }
+
+                  // Close the connection
+                  connection.disconnect();
+
+              } catch (Exception e) {
+                  e.printStackTrace();
+              }
+           
         }
     }
 
